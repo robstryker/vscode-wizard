@@ -103,6 +103,13 @@ export function getSinglePageAllControlsDefinition(context: vscode.ExtensionCont
                     initialValue: "Textbox initial value"
                 },
                 {
+                    id: "addPassword",
+                    label: "Password",
+                    description: "Passwords should be easy to guess.",
+                    type: "password",
+                    initialValue: "hunter2"
+                },
+                {
                     id: "addusernameNoDescNoInitialValue",
                     label: "Username No Desc No InitialValue",
                     type: "textbox",

@@ -17,6 +17,6 @@ function registerCommands(context: vscode.ExtensionContext) {
   context.subscriptions.push(homePage);
 
   function openSampleWizard(context: vscode.ExtensionContext) {
-    sample.getThreePageBranchWorkflowSampleWizardWithValidation(context).open();
+    sample.demonstrateSinglePageAllControls(context).open();
   }
 }
