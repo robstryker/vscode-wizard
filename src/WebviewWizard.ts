@@ -320,6 +320,16 @@ export enum SEVERITY {
     ERROR = 4
 }
 
+export enum FIELD_TYPE {
+    TEXTBOX="textbox",
+    CHECKBOX="checkbox",
+    NUMBER="number",
+    TEXTAREA="textarea",
+    RADIO="radio",
+    SELECT="select",
+    COMBO="combo",
+    PASSWORD="password"
+}
 
 export enum BUTTONS {
     PREVIOUS = 1,

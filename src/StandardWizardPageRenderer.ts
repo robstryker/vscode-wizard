@@ -1,4 +1,4 @@
-import { WizardPageDefinition, WizardPageFieldDefinition, isWizardPageFieldDefinition, isWizardPageSectionDefinition, WizardPageSectionDefinition, ValidatorResponse } from './WebviewWizard';
+import { WizardPageDefinition, WizardPageFieldDefinition, isWizardPageFieldDefinition, isWizardPageSectionDefinition, WizardPageSectionDefinition, ValidatorResponse, FIELD_TYPE } from './WebviewWizard';
 import {IWizardPageRenderer} from './IWizardPageRenderer';
 
 export class StandardWizardPageRenderer implements IWizardPageRenderer {
@@ -43,25 +43,34 @@ export class StandardWizardPageRenderer implements IWizardPageRenderer {
 
     oneFieldAsString(oneField: WizardPageFieldDefinition, data: any) : string {
         let ret = "";
-        if( oneField.type === "textbox") {
+        if( oneField.type === FIELD_TYPE.TEXTBOX) {
             ret = ret + this.textBoxAsHTML(oneField, data);
-        } else if( oneField.type === "checkbox") {
+        } else if( oneField.type === FIELD_TYPE.CHECKBOX) {
             ret = ret + this.checkBoxAsHTML(oneField, data);
-        } else if( oneField.type === "number") {
+        } else if( oneField.type === FIELD_TYPE.NUMBER) {
             ret = ret + this.numberAsHTML(oneField, data);
-        } else if( oneField.type === "textarea") {
+        } else if( oneField.type === FIELD_TYPE.TEXTAREA) {
             ret = ret + this.textAreaAsHTML(oneField, data);
-        } else if( oneField.type === "radio") {
+        } else if( oneField.type === FIELD_TYPE.RADIO) {
             ret = ret + this.radioGroupAsHTML(oneField, data);
-        } else if( oneField.type === "select") {
+        } else if( oneField.type === FIELD_TYPE.SELECT) {
             ret = ret + this.selectAsHTML(oneField, data);
-        } else if( oneField.type === "combo") {
+        } else if( oneField.type === FIELD_TYPE.COMBO) {
             ret = ret + this.comboAsHTML(oneField, data);
+        } else if( oneField.type === FIELD_TYPE.PASSWORD) {
+            ret = ret + this.passwordAsHTML(oneField, data);
         }
         return this.divClass("setting", 0, ret);
     }
 
     textBoxAsHTML(oneField: WizardPageFieldDefinition, data: any): string {
+        return this.textOrPasswordAsHTML(oneField, data, "text")
+    }
+    passwordAsHTML(oneField: WizardPageFieldDefinition, data: any): string {
+        return this.textOrPasswordAsHTML(oneField, data, "password")
+    }
+
+    textOrPasswordAsHTML(oneField: WizardPageFieldDefinition, data: any, type: string): string {
         let iv = this.getInitialValue(oneField, data);
 
         let lbl = this.labelFor(oneField.id, oneField.label,0);
@@ -70,7 +79,7 @@ export class StandardWizardPageRenderer implements IWizardPageRenderer {
         let disabled = (!this.isFieldEnabled(oneField, data) ? " disabled" : "");
         
         
-        let input = "<input id=\"" + oneField.id + "\" name=\"" + oneField.id + "\" type=\"text\"" 
+        let input = "<input id=\"" + oneField.id + "\" name=\"" + oneField.id + "\" type=\"" + type + "\"" 
                 + (iv ? "value=\"" + iv + "\"" : "")
                 + initialValueSegment + placeholderSegment + this.onInputFieldChanged(oneField.id) + 
                 disabled + " data-setting data-setting-preview>";
