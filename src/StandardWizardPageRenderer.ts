@@ -4,7 +4,10 @@ import { WizardPageFieldOptionProvider } from '.';
 
 export class StandardWizardPageRenderer implements IWizardPageRenderer {
   private stateMap: Map<string,FieldDefinitionState>;
-  constructor(state: Map<string,FieldDefinitionState>) {
+  constructor() {
+    this.stateMap = new Map<string,FieldDefinitionState>();
+  }
+  initialize(state: Map<string,FieldDefinitionState>) {
     this.stateMap = state;
   }
   getContentAsHTML(definition: WizardPageDefinition, data: any): string {
